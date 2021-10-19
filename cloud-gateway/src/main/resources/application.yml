@@ -1,0 +1,18 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+        - id: USUARIO-BACKEND
+          uri: lb://USUARIO-BACKEND
+          predicates:
+            - Path=/usuarios/**
+        - id: DEPARTAMENTO-BACKEND
+          uri: lb://DEPARTAMENTO-BACKEND
+          predicates:
+            - Path=/departamentos/**
