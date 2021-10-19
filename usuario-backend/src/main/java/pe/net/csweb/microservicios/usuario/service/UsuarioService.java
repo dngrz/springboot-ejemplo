@@ -31,7 +31,7 @@ public class UsuarioService {
 		UsuarioBean usuario = usuarioRepository.findByUsuarioId(id);
 		
 		DepartamentoVO departamento = 
-				restTemplate.getForObject("http://localhost:9001/departamentos/" + usuario.getDepartamentoId(), DepartamentoVO.class);
+				restTemplate.getForObject("http://DEPARTAMENTO-BACKEND/departamentos/" + usuario.getDepartamentoId(), DepartamentoVO.class);
 		
 		vo.setDepartamento(departamento);
 		vo.setUsuario(usuario);
