@@ -12,7 +12,40 @@ spring:
           uri: lb://USUARIO-BACKEND
           predicates:
             - Path=/usuarios/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: USUARIO-BACKEND
+                fallbackuri: forward:/usuarioServiceFallBack
         - id: DEPARTAMENTO-BACKEND
           uri: lb://DEPARTAMENTO-BACKEND
           predicates:
             - Path=/departamentos/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: DEPARTAMENTO-BACKEND
+                fallbackuri: forward:/departamentoServiceFallBack
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost
